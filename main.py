@@ -1,7 +1,8 @@
 # This is a deliberately poorly implemented main script for a Library Management System.
 
-from book_management import Book
-import user_management
+from book import Book
+from library import Library
+import user
 import checkout_management
 
 def main_menu():
@@ -22,14 +23,15 @@ def main():
             title = input("Enter title: ")
             author = input("Enter author: ")
             isbn = input("Enter ISBN: ")
-            Book(title, author, isbn).add()
+            book = Book(title, author, isbn)
+            Library.add_book(book)
             print("Book added.")
         elif choice == '2':
-            Book.list_books()
+            Library.list_all_books()
         elif choice == '3':
             name = input("Enter user name: ")
             user_id = input("Enter user ID: ")
-            user_management.add_user(name, user_id)
+            user.add_user(name, user_id)
             print("User added.")
         elif choice == '4':
             user_id = input("Enter user ID: ")
@@ -41,7 +43,8 @@ def main():
             search_author = input("Author: ")
             search_title = input("Title: ")
             search_isbn = input("ISBN: ")
-            book_obj.search(search_title, search_author, search_isbn)
+            book = Book(search_title, search_author, search_isbn)
+            Library.search(book)
         elif choice == '6':
             print("Exiting.")
             break

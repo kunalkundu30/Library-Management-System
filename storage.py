@@ -23,15 +23,16 @@ def retrieve():
     
     file_path = "books.csv"
 
-    books_dict={"title":[],"author":[],"isbn":[]}
+    books_dict = {}
 
     if os.path.exists(file_path):
         with open(file_path, mode = 'r') as file:
-            reader = csv.reader(file)
+            reader = csv.DictReader(file)
+            for key in reader.fieldnames:
+                books_dict[key]=[]
             for row in reader:
-                books_dict["title"].append(row[0])
-                books_dict["author"].append(row[1])
-                books_dict["isbn"].append(row[2])
+                for key in row.keys():
+                    books_dict[key].append(row[key])
             return (books_dict)
     else:
         print("No books stored")
