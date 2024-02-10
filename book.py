@@ -1,9 +1,11 @@
 # Global list to store books
 
+
 class Book:
 
     def __init__(self, title=None, author=None, isbn=None):
-        self.attributes = {'title':title,'author':author,'isbn':isbn}
+        self.attributes = {"title": title, "author": author, "isbn": isbn}
+
 
 # books = []
 
@@ -13,4 +15,3 @@ class Book:
 # def list_books():
 #     for book in books:
 #         print(book)
-
