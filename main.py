@@ -5,6 +5,7 @@ from library import Library
 import user
 import checkout_management
 
+
 def main_menu():
     print("\nLibrary Management System")
     print("1. Add Book")
@@ -12,9 +13,11 @@ def main_menu():
     print("3. Add User")
     print("4. Checkout Book")
     print("5. Search Book")
-    print("6. Exit")
+    print("6. Delete Book")
+    print("7. Exit")
     choice = input("Enter choice: ")
     return choice
+
 
 def main():
     while True:
@@ -62,14 +65,34 @@ def main():
                 print("Invalid choice, please try again.")
                 continue
             Library.search_book(search_field, search_query)
-            print ("Search Completed")
+            print("Search Completed")
 
         elif choice == '6':
+            print("Enter the field with which you want to delete a book\n")
+            print("1. Title")
+            print("2. Author")
+            print("3. ISBN")
+            choice = input("Enter choice: ")
+            if choice == '1':
+                search_field = "title"
+                search_query = input("Title: ")
+            elif choice == '2':
+                search_field = "author"
+                search_query = input("Author: ")
+            elif choice == '3':
+                search_field = "isbn"
+                search_query = input("ISBN: ")
+            else:
+                print("Invalid choice, please try again.")
+                continue
+            Library.delete_book(search_field, search_query)
+
+        elif choice == '7':
             print("Exiting.")
             break
         else:
             print("Invalid choice, please try again.")
-            
+
 
 if __name__ == "__main__":
     main()

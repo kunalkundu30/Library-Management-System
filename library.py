@@ -28,7 +28,7 @@ class Library:
             print("No books in library")
 
     @staticmethod
-    def search_book(search_field, search_query):
+    def search_book(search_field, search_query, should_return = False):
 
         books_dict = storage.retrieve()
         indices = []
@@ -37,7 +37,7 @@ class Library:
                 if search_query == value:
                     indices.append(index)
             if len(indices) == 0:
-                print ("Search result is empty. Search term not found.")
+                print("Search result is empty. Search term not found.")
             else:
                 print("\nThe search result(s) are:")
                 for index in indices:
@@ -50,3 +50,24 @@ class Library:
                     )
         else:
             print("No books in library")
+
+        if should_return == True:
+            return (indices)
+
+    @staticmethod
+    def delete_book(search_field, search_query):
+        delete_indices = Library.search_book(search_field, search_query, should_return = True)
+        delete_indices = [index+1 for index in delete_indices]
+        if len(delete_indices)>0:
+            print("These books will be deleted. Do you wish to continue?")
+            choice = input("Enter Y/N: ")
+            if choice == "Y":
+                storage.delete(delete_indices)
+                print("Deleted successfully.")
+            elif choice == "N":
+                print("Deletion aborted")
+            else:
+                print("Invalid choice, please try again.")
+        else:
+            print("Book not found. Deletion aborted.")
+
