@@ -31,7 +31,14 @@ class Library:
         configuration_file_location = get_configuration_file_location()
         config = get_configuration_file(configuration_file_location)
         book_file_path = config["book_file_path"]
-        storage.store(book, book_file_path)
+
+        indices = Library.search_book(
+            'isbn', book['isbn'], should_return=True
+        )
+        if len(indices>0):
+            print("Book with same ISBN already exists")
+        else:
+            storage.store(book, book_file_path)
 
     @staticmethod
     def list_all_books():
@@ -183,7 +190,15 @@ class Library:
         configuration_file_location = get_configuration_file_location()
         config = get_configuration_file(configuration_file_location)
         user_file_path = config["user_file_path"]
-        storage.store(user, user_file_path)
+
+        indices = Library.search_user(
+            'userId', user['userId'], should_return=True
+        )
+        if len(indices>0):
+            print("User with same user ID already exists")
+        else:
+            storage.store(user, user_file_path)
+        
 
     @staticmethod
     def list_all_users():
