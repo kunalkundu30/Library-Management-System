@@ -37,7 +37,7 @@ def input_author(message):
     while True:
         try:
             user_input = input(message)
-            if len(user_input)>200 or not user_input.strip() or not user_input.isalnum():
+            if len(user_input)>200 or not user_input.strip():
                 raise ValueError("Author is incorrect, please try again.")
             else:
                 return user_input
@@ -84,7 +84,7 @@ def input_user_name(message):
     while True:
         try:
             user_input = input(message)
-            if len(user_input)>200 or not user_input.strip() or not user_input.isalnum():
+            if len(user_input)>200 or not user_input.strip():
                 raise ValueError("User Name is incorrect, please try again.")
             else:
                 return user_input
@@ -100,7 +100,7 @@ def input_user_id(message):
     while True:
         try:
             user_input = input(message)
-            if len(user_input)>20 or not user_input.strip() or not user_input.isalnum():
+            if len(user_input)>20 or not user_input.strip():
                 raise ValueError("User ID is incorrect, please try again.")
             else:
                 return user_input

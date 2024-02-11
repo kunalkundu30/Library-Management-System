@@ -33,7 +33,7 @@ class Library:
         book_file_path = config["book_file_path"]
 
         indices = Library.search_book(
-            'isbn', book['isbn'], should_return=True
+            'isbn', book.attributes['isbn'], should_return=True
         )
         if len(indices>0):
             print("Book with same ISBN already exists")
@@ -192,7 +192,7 @@ class Library:
         user_file_path = config["user_file_path"]
 
         indices = Library.search_user(
-            'userId', user['userId'], should_return=True
+            'userId', user.attributes['userId'], should_return=True
         )
         if len(indices>0):
             print("User with same user ID already exists")
