@@ -18,6 +18,7 @@ from user import User
 from utils import get_configuration_file_location, get_configuration_file
 from datetime import date
 from input_validation import input_title, input_author, input_quantity, input_user_name
+import sys
 
 
 class Library:
@@ -112,17 +113,23 @@ class Library:
         if should_return:
             return indices
         elif stock_check_checkin:
-            if int(books_dict["copies"][indices[0]]) > int(
-                books_dict["borrowed"][indices[0]]
-            ):
-                return (indices, "Y")
+            if len(indices) >0:
+                if int(books_dict["copies"][indices[0]]) > int(
+                    books_dict["borrowed"][indices[0]]
+                ):
+                    return (indices, "Y")
+                else:
+                    return (indices, "N")
             else:
-                return (indices, "N")
+                sys.exit(0)
         elif stock_check_checkout:
-            if int(books_dict["borrowed"][indices[0]]) > 0:
-                return (indices, "Y")
+            if len(indices) >0:
+                if int(books_dict["borrowed"][indices[0]]) > 0:
+                    return (indices, "Y")
+                else:
+                    return (indices, "N")
             else:
-                return (indices, "N")
+                sys.exit(0)
 
     @staticmethod
     def delete_book(search_field, search_query):

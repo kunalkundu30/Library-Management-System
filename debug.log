@@ -36,3 +36,7 @@
 2024-02-11 12:35:56,136 - INFO - Attempt made to update user with user ID 1
 2024-02-11 12:36:41,153 - INFO - Attempt made to delete user with userId: 4
 2024-02-11 12:36:50,060 - INFO - Attempt made to exit the application
+2024-02-11 12:38:13,991 - INFO - Attempt made to exit the application
+2024-02-11 12:38:22,965 - INFO - Attempt made to checkin book with ISBN 3433 by user with user id 332
+2024-02-11 12:44:03,105 - INFO - Attempt made to checkin book with ISBN 345342 by user with user id dgf
+2024-02-11 12:47:00,640 - INFO - Attempt made to checkout book with ISBN 435 by user with user id sdgfv
