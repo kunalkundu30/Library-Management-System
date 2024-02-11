@@ -21,6 +21,7 @@ from utils import get_configuration_file_location, get_configuration_file
 import pandas as pd
 from ast import literal_eval
 import sys
+import logging
 
 
 def store(object, file_path):
@@ -37,6 +38,8 @@ def store(object, file_path):
                 writer.writerow(object.attributes)
         except FileNotFoundError as e:
             print("Error opening file {}.  The Exception is: {}".format(file_path, e))
+            logging.error("Error opening file {}.  The Exception is: {}".format(file_path, e))
+            sys.exit(1)
 
     else:
         try:
@@ -47,6 +50,8 @@ def store(object, file_path):
                 writer.writerow(object.attributes)
         except FileNotFoundError as e:
             print("Error opening file {}.  The Exception is: {}".format(file_path, e))
+            logging.error("Error opening file {}.  The Exception is: {}".format(file_path, e))
+            sys.exit(1)
 
 
 def retrieve(file_path):
@@ -69,6 +74,8 @@ def retrieve(file_path):
                 return (object_dict)
         except FileNotFoundError as e:
             print("Error opening file {}.  The Exception is: {}".format(file_path, e))
+            logging.error("Error opening file {}.  The Exception is: {}".format(file_path, e))
+            sys.exit(1)
     else:
         print("Storage is empty.")
         return
@@ -88,6 +95,8 @@ def delete(indices, file_path):
 
     except FileNotFoundError as e:
         print("Error opening file {}.  The Exception is: {}".format(file_path, e))
+        logging.error("Error opening file {}.  The Exception is: {}".format(file_path, e))
+        sys.exit(1)
 
     try:
         with open(file_path, 'w', newline='') as file:
@@ -96,6 +105,8 @@ def delete(indices, file_path):
 
     except FileNotFoundError as e:
         print("Error opening file {}.  The Exception is: {}".format(file_path, e))
+        logging.error("Error opening file {}.  The Exception is: {}".format(file_path, e))
+        sys.exit(1)
 
 
 def update(indices, object, file_path):
@@ -118,6 +129,8 @@ def update(indices, object, file_path):
 
     except FileNotFoundError as e:
         print("Error opening file {}.  The Exception is: {}".format(file_path, e))
+        logging.error("Error opening file {}.  The Exception is: {}".format(file_path, e))
+        sys.exit(1)
 
     try:
         with open(file_path, 'w', newline='') as file:
@@ -125,6 +138,8 @@ def update(indices, object, file_path):
             writer.writerows(rows)
     except FileNotFoundError as e:
         print("Error opening file {}.  The Exception is: {}".format(file_path, e))
+        logging.error("Error opening file {}.  The Exception is: {}".format(file_path, e))
+        sys.exit(1)
 
 
 def checkin_book(user_id, isbn, book_index, user_index, checkin_date, checkout_date=None):
@@ -146,6 +161,8 @@ def checkin_book(user_id, isbn, book_index, user_index, checkin_date, checkout_d
         books_data = pd.read_csv(book_file_path, converters={"issuedTo": literal_eval})
     except FileNotFoundError as e:
         print("Error opening file {}.  The Exception is: {}".format(book_file_path, e))
+        logging.error("Error opening file {}.  The Exception is: {}".format(book_file_path, e))
+        sys.exit(1)
 
     books_data.loc[book_index, 'borrowed'] = books_data.loc[book_index, 'borrowed']+1
     books_data.loc[book_index, 'issuedTo'].append(user_id)
@@ -155,6 +172,9 @@ def checkin_book(user_id, isbn, book_index, user_index, checkin_date, checkout_d
         users_data = pd.read_csv(user_file_path, converters={"issued": literal_eval})
     except FileNotFoundError as e:
         print("Error opening file {}.  The Exception is: {}".format(user_file_path, e))
+        logging.error("Error opening file {}.  The Exception is: {}".format(user_file_path, e))
+        sys.exit(1)
+
     users_data.loc[user_index, "issued"].append([isbn,checkin_date,checkout_date])
     users_data.to_csv(user_file_path, index=False)
 
@@ -178,6 +198,9 @@ def checkout_book(user_id, isbn, book_index, user_index, checkout_date):
         books_data = pd.read_csv(book_file_path, converters={"issuedTo": literal_eval})
     except FileNotFoundError as e:
         print("Error opening file {}.  The Exception is: {}".format(book_file_path, e))
+        logging.error("Error opening file {}.  The Exception is: {}".format(book_file_path, e))
+        sys.exit(1)
+
     books_data.loc[book_index, 'borrowed'] = books_data.loc[book_index, 'borrowed']-1
     books_data.loc[book_index, 'issuedTo'].remove(user_id)
     books_data.to_csv(book_file_path, index=False)
@@ -186,6 +209,9 @@ def checkout_book(user_id, isbn, book_index, user_index, checkout_date):
         users_data = pd.read_csv(user_file_path, converters={"issued": literal_eval})
     except FileNotFoundError as e:
         print("Error opening file {}.  The Exception is: {}".format(user_file_path, e))
+        logging.error("Error opening file {}.  The Exception is: {}".format(user_file_path, e))
+        sys.exit(1)
+
     message = "The book had not been issued by this user."
     for index, book in enumerate(users_data.loc[user_index, "issued"]):
         if book[0] == isbn and book[2] == None:

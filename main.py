@@ -19,7 +19,8 @@ from book import Book
 from library import Library
 from user import User
 from input_validation import input_title, input_author, input_isbn, input_quantity, input_user_name, input_user_id
-
+from utils import setup_logging
+import logging
 
 def main_menu():
     """
@@ -57,36 +58,42 @@ def main():
             author = input_author("Enter author: ")
             isbn = input_isbn("Enter ISBN: ")
             quantity = input_quantity("Enter Quantity: ")
+            logging.info(f"Attempt made to add book with ISBN {isbn}.")
             book = Book(title, author, isbn, quantity)
             Library.add_book(book)
             print("Book added.")
             
         # List all books in the library
         elif choice == '2':
+            logging.info("Attempt made to list all book.")
             Library.list_all_books()
 
         # Add a new user to the library system
         elif choice == '3':
             name = input_user_name("Enter user name: ")
             user_id = input_user_id("Enter user ID: ")
+            logging.info(f"Attempt made to add user with user id {user_id}")
             user = User(name, user_id)
             Library.add_user(user)
             print("User added.")
 
         # List all the users
         elif choice == '4':
+            logging.info("Attempt made to list all users")
             Library.list_all_users()
 
-        # Borrow book
+        # Checkin (Borrow) book
         elif choice == '5':
             user_id = input_user_id("Enter user ID: ")
             isbn = input_isbn("Enter ISBN: ")
+            logging.info(f"Attempt made to checkin book with ISBN {isbn} by user with user id {user_id}")
             Library.checkin_book(user_id, isbn)
 
-        # checkout book
+        # Checkout book (Return)
         elif choice == '6':
             user_id = input_user_id("Enter user ID: ")
             isbn = input_isbn("Enter ISBN: ")
+            logging.info(f"Attempt made to checkout book with ISBN {isbn} by user with user id {user_id}")
             Library.checkout_book(user_id, isbn)
 
         # Search operation on book
@@ -108,12 +115,14 @@ def main():
             else:
                 print("Invalid choice, please try again.")
                 continue
+            logging.info(f"Attempt made to search book with {search_field}: {search_query}")
             Library.search_book(search_field, search_query)
             print("\nSearch completed.")
 
         # Update the book
         elif choice == '8':
             isbn = input_isbn("Enter ISBN: ")
+            logging.info(f"Attempt made to update book with ISBN {isbn}")
             Library.update_book(isbn)
 
         # Delete operation on book
@@ -135,6 +144,7 @@ def main():
             else:
                 print("Invalid choice, please try again.")
                 continue
+            logging.info(f"Attempt made to delete book with {search_field}: {search_query}")
             Library.delete_book(search_field, search_query)
 
         # Search operation on users
@@ -152,12 +162,14 @@ def main():
             else:
                 print("Invalid choice, please try again.")
                 continue
+            logging.info(f"Attempt made to search user with {search_field}: {search_query}")
             Library.search_user(search_field, search_query)
             print("\nSearch completed.")
 
         # Update operation on user
         elif choice == '11':
             user_id = input_user_id("Enter user ID: ")
+            logging.info(f"Attempt made to update user with user ID {user_id}")
             Library.update_user(user_id)
 
         # Delete operation on user
@@ -175,10 +187,12 @@ def main():
             else:
                 print("Invalid choice, please try again.")
                 continue
+            logging.info(f"Attempt made to delete user with {search_field}: {search_query}")
             Library.delete_user(search_field, search_query)
 
         # Exit from the tool
         elif choice == '13':
+            logging.info("Attempt made to exit the application")
             print("Exiting.")
             break
         
@@ -188,4 +202,5 @@ def main():
 
 
 if __name__ == "__main__":
+    setup_logging()
     main()
