@@ -2,7 +2,7 @@
 
 from book import Book
 from library import Library
-import user
+from user import User
 import checkout_management
 
 
@@ -11,10 +11,15 @@ def main_menu():
     print("1. Add Book")
     print("2. List Books")
     print("3. Add User")
-    print("4. Checkout Book")
-    print("5. Search Book")
-    print("6. Delete Book")
-    print("7. Exit")
+    print("4. List Users")
+    print("5. Checkout Book")
+    print("6. Search Book")
+    print("7. Update Book")
+    print("8. Delete Book")
+    print("9. Search User")
+    print("10. Update User")
+    print("11. Delete User")
+    print("12. Exit")
     choice = input("Enter choice: ")
     return choice
 
@@ -37,16 +42,20 @@ def main():
         elif choice == '3':
             name = input("Enter user name: ")
             user_id = input("Enter user ID: ")
-            user.add_user(name, user_id)
+            user = User(name, user_id)
+            Library.add_user(user)
             print("User added.")
 
         elif choice == '4':
+            Library.list_all_users()
+
+        elif choice == '5':
             user_id = input("Enter user ID: ")
             isbn = input("Enter ISBN of the book to checkout: ")
             checkout_management.checkout_book(user_id, isbn)
             print("Book checked out.")
 
-        elif choice == '5':
+        elif choice == '6':
             print("Enter the field with which you want to search\n")
             print("1. Title")
             print("2. Author")
@@ -65,9 +74,13 @@ def main():
                 print("Invalid choice, please try again.")
                 continue
             Library.search_book(search_field, search_query)
-            print("Search Completed")
+            print("\nSearch completed.")
 
-        elif choice == '6':
+        elif choice == '7':
+            isbn = input("Enter ISBN of the book to update: ")
+            Library.update_book(isbn)
+
+        elif choice == '8':
             print("Enter the field with which you want to delete a book\n")
             print("1. Title")
             print("2. Author")
@@ -87,7 +100,44 @@ def main():
                 continue
             Library.delete_book(search_field, search_query)
 
-        elif choice == '7':
+        elif choice == '9':
+            print("Enter the field with which you want to search\n")
+            print("1. Name")
+            print("2. User ID")
+            choice = input("Enter choice: ")
+            if choice == '1':
+                search_field = "name"
+                search_query = input("Name: ")
+            elif choice == '2':
+                search_field = "userId"
+                search_query = input("User ID: ")
+            else:
+                print("Invalid choice, please try again.")
+                continue
+            Library.search_user(search_field, search_query)
+            print("\nSearch completed.")
+
+        elif choice == '10':
+            user_id = input("Enter User ID of the user to update: ")
+            Library.update_user(user_id)
+
+        elif choice == '11':
+            print("Enter the field with which you want to delete a user\n")
+            print("1. Name")
+            print("2. User ID")
+            choice = input("Enter choice: ")
+            if choice == '1':
+                search_field = "name"
+                search_query = input("Name: ")
+            elif choice == '2':
+                search_field = "userId"
+                search_query = input("User ID: ")
+            else:
+                print("Invalid choice, please try again.")
+                continue
+            Library.delete_user(search_field, search_query)
+
+        elif choice == '12':
             print("Exiting.")
             break
         else:
