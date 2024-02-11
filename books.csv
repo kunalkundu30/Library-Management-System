@@ -1,7 +1,19 @@
-title,author,isbn
-dfb,fds,324
-ref,dsa,43
-test,testing,1
-dfvs,dfsgs,432
-adsc,dascx,324
-dsfvf,gfdsaxzvc,q34
+title,author,isbn,copies,borrowed,issuedTo
+sdf,bgfd,1,100,17,"['10', '10', '10', '10', '10', '10', '10', '10', '10', '10', '10', '10', '10', '20', '10', '10', '10']"
+fed,fds,2,200,1,['10']
+hdgf,rtgfd,3,300,0,[]
+fed,fds,4,400,0,[]
+hdgf,rtgfd,5,500,1,['80']
+fed,fds,6,600,0,[]
+hdgf,rtgfd,7,700,0,[]
+fed,fds,8,800,0,[]
+hdgf,rtgfd,9,900,0,[]
+fed,fds,10,1000,0,[]
+hdgf,rtgfd,11,1100,0,[]
+fed,fds,12,1200,0,[]
+hdgf,rtgfd,13,1300,0,[]
+fed,fds,14,1400,0,[]
+hdgf,rtgfd,15,1500,0,[]
+fed,fds,16,1600,0,[]
+hdgf,rtgfd,17,1700,0,[]
+fed,fds,18,1800,0,[]

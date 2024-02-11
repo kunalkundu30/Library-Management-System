@@ -2,6 +2,7 @@ import storage
 from book import Book
 from user import User
 from utils import get_configuration_file_location, get_configuration_file
+from datetime import date
 
 
 class Library:
@@ -37,7 +38,7 @@ class Library:
             print("\nNo books in library")
 
     @staticmethod
-    def search_book(search_field, search_query, should_return = False):
+    def search_book(search_field, search_query, should_return = False, stock_check_checkin=False, stock_check_checkout=False):
         configuration_file_location = get_configuration_file_location()
         config = get_configuration_file(configuration_file_location)
         book_file_path = config["book_file_path"]
@@ -64,6 +65,17 @@ class Library:
             print("\nNo books in library")
         if should_return == True:
             return (indices)
+        elif stock_check_checkin == True:
+            if int(books_dict["copies"][indices[0]]) > int(books_dict["borrowed"][indices[0]]):
+                return (indices, 'Y')
+            else:
+                return (indices, 'N')
+        elif stock_check_checkout == True:
+            if int(books_dict["borrowed"][indices[0]]) > 0:
+                return (indices, 'Y')
+            else:
+                return (indices, 'N')
+
 
     @staticmethod
     def delete_book(search_field, search_query):
@@ -99,9 +111,9 @@ class Library:
             choice = input("Enter Y/N: ")
             if choice == "Y":
                 updated_title = input("Enter new title: ")
-                updated_author = input("Enter author: ")
-                updated_isbn = input("Enter ISBN: ")
-                book = Book(updated_title, updated_author, updated_isbn)
+                updated_author = input("Enter new author: ")
+                updated_copies = input("Enter new number of copies: ")
+                book = Book(updated_title, updated_author, isbn, updated_copies)
                 storage.update(update_index, book, book_file_path)
                 print("Updated successfully.")
             elif choice == "N":
@@ -168,6 +180,7 @@ class Library:
             print("\nNo user registered in library")
         if should_return == True:
             return (indices)
+
         
     @staticmethod
     def delete_user(search_field, search_query):
@@ -215,3 +228,49 @@ class Library:
                 print("Invalid choice, please try again.")
         else:
             print("Book not found. Updation task aborted.")
+
+
+    @staticmethod
+    def checkin_book(user_id, isbn):
+        book_indices, availability = Library.search_book("isbn", isbn, stock_check_checkin = True)
+        user_indices = Library.search_user("userId", user_id, should_return = True)
+        checkin_date = str(date.today())
+        if len(user_indices)>0 and len(book_indices)>0:
+            if availability == 'Y':
+                user_index = user_indices[0]
+                book_index = book_indices[0]
+                storage.checkin_book(user_id, isbn, book_index, user_index, checkin_date)
+                print("Book checked in (Borrowed) successfully.")
+            else:
+                print("Book is already issued.")
+        elif len(user_indices) == 0:
+            print("User not registered.")
+        elif len(book_indices) == 0:
+            print("Book is not available in library.")
+
+
+    @staticmethod
+    def checkout_book(user_id, isbn):
+        book_indices, issued_earlier = Library.search_book("isbn", isbn, stock_check_checkout = True)
+        user_indices = Library.search_user("userId", user_id, should_return = True)
+        checkout_date = str(date.today())
+        if len(user_indices)>0 and len(book_indices)>0:
+            if issued_earlier == 'Y':
+                user_index = user_indices[0]
+                book_index = book_indices[0]
+                return_message = storage.checkout_book(user_id, isbn, book_index, user_index, checkout_date)
+                print(return_message)
+            else:
+                print("Book had not been issued earlier.")
+        elif len(user_indices) == 0:
+            print("User not registered.")
+        elif len(book_indices) == 0:
+            print("Book is not available in library.")
+
+
+            
+
+            
+            
+
+

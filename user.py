@@ -2,8 +2,8 @@
 
 class User():
 
-    def __init__(self, name=None, user_id=None):
-        self.attributes = {"name": name, "userId": user_id}
+    def __init__(self, name=None, user_id=None, issued=[]):
+        self.attributes = {"name": name, "userId": user_id, "issued": issued}
 
 
 # users = []
