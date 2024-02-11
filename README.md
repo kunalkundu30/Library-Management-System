@@ -25,6 +25,6 @@ The Library Management System (LMS) is a modular application designed to manage 
 ## Getting Started
 1. **Configuration**: Ensure `config.yml` is correctly set up with your storage paths.
 2. **Initialization**: Run `main.py` to start the application and navigate through the menu for various operations.
-3. **Data Management**: Use the `storage.py` module for direct manipulation of CSV files for advanced data management tasks.
+3. **Data Management**: Use the `storage.py` module for direct manipulation of CSV files for data management tasks.
 
 This README provides a concise overview of the LMS project, outlining its design principles, architecture, and basic navigation instructions.
