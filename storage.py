@@ -20,6 +20,7 @@ import os
 from utils import get_configuration_file_location, get_configuration_file
 import pandas as pd
 from ast import literal_eval
+import sys
 
 
 def store(object, file_path):
@@ -29,17 +30,23 @@ def store(object, file_path):
     @param file_path (str): Path to the CSV file.
     """
     if os.path.exists(file_path):
-        with open(file_path, mode='a') as file:
-            fieldnames = object.attributes.keys()
-            writer = csv.DictWriter(file, fieldnames=fieldnames)
-            writer.writerow(object.attributes)
+        try:
+            with open(file_path, mode='a') as file:
+                fieldnames = object.attributes.keys()
+                writer = csv.DictWriter(file, fieldnames=fieldnames)
+                writer.writerow(object.attributes)
+        except FileNotFoundError as e:
+            print("Error opening file {}.  The Exception is: {}".format(file_path, e))
 
     else:
-        with open(file_path, mode='w') as file:
-            fieldnames = object.attributes.keys()
-            writer = csv.DictWriter(file, fieldnames=fieldnames)
-            writer.writeheader()
-            writer.writerow(object.attributes)
+        try:
+            with open(file_path, mode='w') as file:
+                fieldnames = object.attributes.keys()
+                writer = csv.DictWriter(file, fieldnames=fieldnames)
+                writer.writeheader()
+                writer.writerow(object.attributes)
+        except FileNotFoundError as e:
+            print("Error opening file {}.  The Exception is: {}".format(file_path, e))
 
 
 def retrieve(file_path):
@@ -51,16 +58,19 @@ def retrieve(file_path):
     object_dict = {}
 
     if os.path.exists(file_path):
-        with open(file_path, mode='r') as file:
-            reader = csv.DictReader(file)
-            for key in reader.fieldnames:
-                object_dict[key] = []
-            for row in reader:
-                for key in row.keys():
-                    object_dict[key].append(row[key])
-            return (object_dict)
+        try:
+            with open(file_path, mode='r') as file:
+                reader = csv.DictReader(file)
+                for key in reader.fieldnames:
+                    object_dict[key] = []
+                for row in reader:
+                    for key in row.keys():
+                        object_dict[key].append(row[key])
+                return (object_dict)
+        except FileNotFoundError as e:
+            print("Error opening file {}.  The Exception is: {}".format(file_path, e))
     else:
-        print("No value is stored. Storage is empty.")
+        print("Storage is empty.")
         return
 
 
@@ -70,15 +80,22 @@ def delete(indices, file_path):
     @param indices (list): List of row indices to delete.
     @param file_path (str): Path to the CSV file.
     """
-    with open(file_path, mode='r') as file:
-        reader = csv.reader(file)
-        rows = list(reader)
+    try:
+        with open(file_path, mode='r') as file:
+            reader = csv.reader(file)
+            rows = list(reader)
+            rows = [row for index, row in enumerate(rows) if index not in indices]
 
-        rows = [row for index, row in enumerate(rows) if index not in indices]
+    except FileNotFoundError as e:
+        print("Error opening file {}.  The Exception is: {}".format(file_path, e))
 
-    with open(file_path, 'w', newline='') as file:
-        writer = csv.writer(file)
-        writer.writerows(rows)
+    try:
+        with open(file_path, 'w', newline='') as file:
+            writer = csv.writer(file)
+            writer.writerows(rows)
+
+    except FileNotFoundError as e:
+        print("Error opening file {}.  The Exception is: {}".format(file_path, e))
 
 
 def update(indices, object, file_path):
@@ -88,19 +105,26 @@ def update(indices, object, file_path):
     @param object (Object): The object with updated attributes.
     @param file_path (str): Path to the CSV file.
     """
-    with open(file_path, mode='r') as file:
-        reader = csv.reader(file)
-        rows = list(reader)
+    try:
+        with open(file_path, mode='r') as file:
+            reader = csv.reader(file)
+            rows = list(reader)
 
-        for i, key in enumerate(object.attributes):
-            if key == "copies":
-                rows[indices[0]][i] = rows[indices[0]][i] + object.attributes[key]
-            else:
-                rows[indices[0]][i] = object.attributes[key]
+            for i, key in enumerate(object.attributes):
+                if key == "copies":
+                    rows[indices[0]][i] = rows[indices[0]][i] + object.attributes[key]
+                else:
+                    rows[indices[0]][i] = object.attributes[key]
 
-    with open(file_path, 'w', newline='') as file:
-        writer = csv.writer(file)
-        writer.writerows(rows)
+    except FileNotFoundError as e:
+        print("Error opening file {}.  The Exception is: {}".format(file_path, e))
+
+    try:
+        with open(file_path, 'w', newline='') as file:
+            writer = csv.writer(file)
+            writer.writerows(rows)
+    except FileNotFoundError as e:
+        print("Error opening file {}.  The Exception is: {}".format(file_path, e))
 
 
 def checkin_book(user_id, isbn, book_index, user_index, checkin_date, checkout_date=None):
@@ -118,12 +142,19 @@ def checkin_book(user_id, isbn, book_index, user_index, checkin_date, checkout_d
     book_file_path = config["book_file_path"]
     user_file_path = config["user_file_path"]
 
-    books_data = pd.read_csv(book_file_path, converters={"issuedTo": literal_eval})
+    try:
+        books_data = pd.read_csv(book_file_path, converters={"issuedTo": literal_eval})
+    except FileNotFoundError as e:
+        print("Error opening file {}.  The Exception is: {}".format(book_file_path, e))
+
     books_data.loc[book_index, 'borrowed'] = books_data.loc[book_index, 'borrowed']+1
     books_data.loc[book_index, 'issuedTo'].append(user_id)
     books_data.to_csv(book_file_path, index=False)
 
-    users_data = pd.read_csv(user_file_path, converters={"issued": literal_eval})
+    try:
+        users_data = pd.read_csv(user_file_path, converters={"issued": literal_eval})
+    except FileNotFoundError as e:
+        print("Error opening file {}.  The Exception is: {}".format(user_file_path, e))
     users_data.loc[user_index, "issued"].append([isbn,checkin_date,checkout_date])
     users_data.to_csv(user_file_path, index=False)
 
@@ -143,12 +174,18 @@ def checkout_book(user_id, isbn, book_index, user_index, checkout_date):
     book_file_path = config["book_file_path"]
     user_file_path = config["user_file_path"]
 
-    books_data = pd.read_csv(book_file_path, converters={"issuedTo": literal_eval})
+    try:
+        books_data = pd.read_csv(book_file_path, converters={"issuedTo": literal_eval})
+    except FileNotFoundError as e:
+        print("Error opening file {}.  The Exception is: {}".format(book_file_path, e))
     books_data.loc[book_index, 'borrowed'] = books_data.loc[book_index, 'borrowed']-1
     books_data.loc[book_index, 'issuedTo'].remove(user_id)
     books_data.to_csv(book_file_path, index=False)
 
-    users_data = pd.read_csv(user_file_path, converters={"issued": literal_eval})
+    try:
+        users_data = pd.read_csv(user_file_path, converters={"issued": literal_eval})
+    except FileNotFoundError as e:
+        print("Error opening file {}.  The Exception is: {}".format(user_file_path, e))
     message = "The book had not been issued by this user."
     for index, book in enumerate(users_data.loc[user_index, "issued"]):
         if book[0] == isbn and book[2] == None:
