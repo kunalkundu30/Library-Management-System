@@ -12,7 +12,6 @@ Utilizes the YAML format for configuration files, allowing for human-readable an
 Encapsulates configuration access within utility functions, abstracting the details of file handling and parsing, and promoting reuse across the application.
 """
 
-
 import yaml
 import logging
 
@@ -43,6 +42,10 @@ def get_configuration_file(configuration_file_location):
 
 
 def setup_logging():
+    """
+    Create and Set up logging session
+    @Summary: Creates and sets up logging session
+    """
     configuration_file_location = get_configuration_file_location()
     config = get_configuration_file(configuration_file_location)
 
@@ -50,12 +53,12 @@ def setup_logging():
     logger.setLevel(logging.DEBUG)
     debug_handler = logging.FileHandler(filename=config["logging_file_path"])
     debug_handler.setLevel(logging.DEBUG)
-    debug_format = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+    debug_format = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
     debug_handler.setFormatter(debug_format)
 
     error_handler = logging.FileHandler(config["logging_file_path"])
     error_handler.setLevel(logging.ERROR)
-    error_format = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+    error_format = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
     error_handler.setFormatter(error_format)
     logger.addHandler(debug_handler)
     logger.addHandler(error_handler)

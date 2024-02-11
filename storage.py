@@ -14,7 +14,6 @@ Design Comments:
 - Leverages Python's standard library for file handling, ensuring compatibility and simplicity.
 """
 
-
 import csv
 import os
 from utils import get_configuration_file_location, get_configuration_file
@@ -32,25 +31,29 @@ def store(object, file_path):
     """
     if os.path.exists(file_path):
         try:
-            with open(file_path, mode='a') as file:
+            with open(file_path, mode="a") as file:
                 fieldnames = object.attributes.keys()
                 writer = csv.DictWriter(file, fieldnames=fieldnames)
                 writer.writerow(object.attributes)
         except FileNotFoundError as e:
             print("Error opening file {}.  The Exception is: {}".format(file_path, e))
-            logging.error("Error opening file {}.  The Exception is: {}".format(file_path, e))
+            logging.error(
+                "Error opening file {}.  The Exception is: {}".format(file_path, e)
+            )
             sys.exit(1)
 
     else:
         try:
-            with open(file_path, mode='w') as file:
+            with open(file_path, mode="w") as file:
                 fieldnames = object.attributes.keys()
                 writer = csv.DictWriter(file, fieldnames=fieldnames)
                 writer.writeheader()
                 writer.writerow(object.attributes)
         except FileNotFoundError as e:
             print("Error opening file {}.  The Exception is: {}".format(file_path, e))
-            logging.error("Error opening file {}.  The Exception is: {}".format(file_path, e))
+            logging.error(
+                "Error opening file {}.  The Exception is: {}".format(file_path, e)
+            )
             sys.exit(1)
 
 
@@ -64,17 +67,19 @@ def retrieve(file_path):
 
     if os.path.exists(file_path):
         try:
-            with open(file_path, mode='r') as file:
+            with open(file_path, mode="r") as file:
                 reader = csv.DictReader(file)
                 for key in reader.fieldnames:
                     object_dict[key] = []
                 for row in reader:
                     for key in row.keys():
                         object_dict[key].append(row[key])
-                return (object_dict)
+                return object_dict
         except FileNotFoundError as e:
             print("Error opening file {}.  The Exception is: {}".format(file_path, e))
-            logging.error("Error opening file {}.  The Exception is: {}".format(file_path, e))
+            logging.error(
+                "Error opening file {}.  The Exception is: {}".format(file_path, e)
+            )
             sys.exit(1)
     else:
         print("Storage is empty.")
@@ -88,24 +93,28 @@ def delete(indices, file_path):
     @param file_path (str): Path to the CSV file.
     """
     try:
-        with open(file_path, mode='r') as file:
+        with open(file_path, mode="r") as file:
             reader = csv.reader(file)
             rows = list(reader)
             rows = [row for index, row in enumerate(rows) if index not in indices]
 
     except FileNotFoundError as e:
         print("Error opening file {}.  The Exception is: {}".format(file_path, e))
-        logging.error("Error opening file {}.  The Exception is: {}".format(file_path, e))
+        logging.error(
+            "Error opening file {}.  The Exception is: {}".format(file_path, e)
+        )
         sys.exit(1)
 
     try:
-        with open(file_path, 'w', newline='') as file:
+        with open(file_path, "w", newline="") as file:
             writer = csv.writer(file)
             writer.writerows(rows)
 
     except FileNotFoundError as e:
         print("Error opening file {}.  The Exception is: {}".format(file_path, e))
-        logging.error("Error opening file {}.  The Exception is: {}".format(file_path, e))
+        logging.error(
+            "Error opening file {}.  The Exception is: {}".format(file_path, e)
+        )
         sys.exit(1)
 
 
@@ -117,7 +126,7 @@ def update(indices, object, file_path):
     @param file_path (str): Path to the CSV file.
     """
     try:
-        with open(file_path, mode='r') as file:
+        with open(file_path, mode="r") as file:
             reader = csv.reader(file)
             rows = list(reader)
 
@@ -129,20 +138,26 @@ def update(indices, object, file_path):
 
     except FileNotFoundError as e:
         print("Error opening file {}.  The Exception is: {}".format(file_path, e))
-        logging.error("Error opening file {}.  The Exception is: {}".format(file_path, e))
+        logging.error(
+            "Error opening file {}.  The Exception is: {}".format(file_path, e)
+        )
         sys.exit(1)
 
     try:
-        with open(file_path, 'w', newline='') as file:
+        with open(file_path, "w", newline="") as file:
             writer = csv.writer(file)
             writer.writerows(rows)
     except FileNotFoundError as e:
         print("Error opening file {}.  The Exception is: {}".format(file_path, e))
-        logging.error("Error opening file {}.  The Exception is: {}".format(file_path, e))
+        logging.error(
+            "Error opening file {}.  The Exception is: {}".format(file_path, e)
+        )
         sys.exit(1)
 
 
-def checkin_book(user_id, isbn, book_index, user_index, checkin_date, checkout_date=None):
+def checkin_book(
+    user_id, isbn, book_index, user_index, checkin_date, checkout_date=None
+):
     """
     @Summary: Records a book check-in by updating book and user data.
     @param user_id (str): ID of the user checking in the book.
@@ -161,21 +176,25 @@ def checkin_book(user_id, isbn, book_index, user_index, checkin_date, checkout_d
         books_data = pd.read_csv(book_file_path, converters={"issuedTo": literal_eval})
     except FileNotFoundError as e:
         print("Error opening file {}.  The Exception is: {}".format(book_file_path, e))
-        logging.error("Error opening file {}.  The Exception is: {}".format(book_file_path, e))
+        logging.error(
+            "Error opening file {}.  The Exception is: {}".format(book_file_path, e)
+        )
         sys.exit(1)
 
-    books_data.loc[book_index, 'borrowed'] = books_data.loc[book_index, 'borrowed']+1
-    books_data.loc[book_index, 'issuedTo'].append(user_id)
+    books_data.loc[book_index, "borrowed"] = books_data.loc[book_index, "borrowed"] + 1
+    books_data.loc[book_index, "issuedTo"].append(user_id)
     books_data.to_csv(book_file_path, index=False)
 
     try:
         users_data = pd.read_csv(user_file_path, converters={"issued": literal_eval})
     except FileNotFoundError as e:
         print("Error opening file {}.  The Exception is: {}".format(user_file_path, e))
-        logging.error("Error opening file {}.  The Exception is: {}".format(user_file_path, e))
+        logging.error(
+            "Error opening file {}.  The Exception is: {}".format(user_file_path, e)
+        )
         sys.exit(1)
 
-    users_data.loc[user_index, "issued"].append([isbn,checkin_date,checkout_date])
+    users_data.loc[user_index, "issued"].append([isbn, checkin_date, checkout_date])
     users_data.to_csv(user_file_path, index=False)
 
 
@@ -198,18 +217,22 @@ def checkout_book(user_id, isbn, book_index, user_index, checkout_date):
         books_data = pd.read_csv(book_file_path, converters={"issuedTo": literal_eval})
     except FileNotFoundError as e:
         print("Error opening file {}.  The Exception is: {}".format(book_file_path, e))
-        logging.error("Error opening file {}.  The Exception is: {}".format(book_file_path, e))
+        logging.error(
+            "Error opening file {}.  The Exception is: {}".format(book_file_path, e)
+        )
         sys.exit(1)
 
-    books_data.loc[book_index, 'borrowed'] = books_data.loc[book_index, 'borrowed']-1
-    books_data.loc[book_index, 'issuedTo'].remove(user_id)
+    books_data.loc[book_index, "borrowed"] = books_data.loc[book_index, "borrowed"] - 1
+    books_data.loc[book_index, "issuedTo"].remove(user_id)
     books_data.to_csv(book_file_path, index=False)
 
     try:
         users_data = pd.read_csv(user_file_path, converters={"issued": literal_eval})
     except FileNotFoundError as e:
         print("Error opening file {}.  The Exception is: {}".format(user_file_path, e))
-        logging.error("Error opening file {}.  The Exception is: {}".format(user_file_path, e))
+        logging.error(
+            "Error opening file {}.  The Exception is: {}".format(user_file_path, e)
+        )
         sys.exit(1)
 
     message = "The book had not been issued by this user."
@@ -219,4 +242,4 @@ def checkout_book(user_id, isbn, book_index, user_index, checkout_date):
             message = "Book checked out (Returned) successfully."
             break
     users_data.to_csv(user_file_path, index=False)
-    return (message)
+    return message
