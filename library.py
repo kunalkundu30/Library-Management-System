@@ -204,7 +204,7 @@ class Library:
         else:
             print("\nUser not found. Deletion task aborted.")
     
-    
+
     @staticmethod
     def update_user(user_id):
 
@@ -266,11 +266,3 @@ class Library:
             print("User not registered.")
         elif len(book_indices) == 0:
             print("Book is not available in library.")
-
-
-            
-
-            
-            
-
-
