@@ -8,20 +8,22 @@ File Description:
 - Provides functionality to raise errors until the user puts the correct response.
 
 Design Comments:
+- Centralises input validation for consistency.
 - Uses different methods for each input for easy editing/customisation in future.
 - Repeatedly raises errors to guide user to input the correct data.
 - Ensures correct, clean and expected data is used in the application.
 """
 
 
-def input_title():
+def input_title(message):
     """
     @Summary: Takes input of title of book from user.
+    @param message (str): Message to be dispalyed while taking input.
     @return (str): Title of the book
     """
     while True:
         try:
-            user_input = input("Enter title: ")
+            user_input = input(message)
             if len(user_input)>200 or not user_input.strip():
                 raise ValueError("Title is incorrect, please try again.")
             else:
@@ -30,14 +32,15 @@ def input_title():
             print(f"Error: {e}")
     
 
-def input_author():
+def input_author(message):
     """
     @Summary: Takes input of author of book from user.
+    @param message (str): Message to be dispalyed while taking input.
     @return (str): Author of the book
     """
     while True:
         try:
-            user_input = input("Enter author: ")
+            user_input = input(message)
             if len(user_input)>200 or not user_input.strip() or not user_input.isalnum():
                 raise ValueError("Author is incorrect, please try again.")
             else:
@@ -46,14 +49,15 @@ def input_author():
             print(f"Error: {e}")
 
 
-def input_isbn():
+def input_isbn(message):
     """
     @Summary: Takes input of ISBN of book from user.
+    @param message (str): Message to be dispalyed while taking input.
     @return (str): ISBN of the book
     """
     while True:
         try:
-            user_input = input("Enter ISBN: ")
+            user_input = input(message)
             if len(user_input)>20 or not user_input.strip() or not user_input.isdigit():
                 raise ValueError("ISBN is incorrect, please try again.")
             else:
@@ -62,28 +66,30 @@ def input_isbn():
             print(f"Error: {e}")
 
             
-def input_quantity():
+def input_quantity(message):
     """
     @Summary: Takes input of quantity of book from user.
+    @param message (str): Message to be dispalyed while taking input.
     @return (int): Quantity of the book
     """
     while True:
         try:
-            user_input = int(input("Enter Quantity: "))
+            user_input = int(input(message))
         except ValueError:
             print("The input is not integer, please try again")
         else:
             return user_input
         
 
-def input_user_name():
+def input_user_name(message):
     """
     @Summary: Takes input of name of the user.
+    @param message (str): Message to be dispalyed while taking input.
     @return (str): User name.
     """
     while True:
         try:
-            user_input = input("Enter user name: ")
+            user_input = input(message)
             if len(user_input)>200 or not user_input.strip() or not user_input.isalnum():
                 raise ValueError("User Name is incorrect, please try again.")
             else:
@@ -92,14 +98,15 @@ def input_user_name():
             print(f"Error: {e}")
 
             
-def input_user_id():
+def input_user_id(message):
     """
     @Summary: Takes input of id of user.
+    @param message (str): Message to be dispalyed while taking input.
     @return (str): User ID.
     """
     while True:
         try:
-            user_input = input("Enter user id: ")
+            user_input = input(message)
             if len(user_input)>20 or not user_input.strip() or not user_input.isalnum():
                 raise ValueError("User ID is incorrect, please try again.")
             else:

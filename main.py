@@ -53,10 +53,10 @@ def main():
 
         # Add a new book to the library collection
         if choice == '1':
-            title = input_title()
-            author = input_author()
-            isbn = input_isbn()
-            quantity = input_quantity()
+            title = input_title("Enter title: ")
+            author = input_author("Enter author: ")
+            isbn = input_isbn("Enter ISBN: ")
+            quantity = input_quantity("Enter Quantity: ")
             book = Book(title, author, isbn, quantity)
             Library.add_book(book)
             print("Book added.")
@@ -67,8 +67,8 @@ def main():
 
         # Add a new user to the library system
         elif choice == '3':
-            name = input_user_name()
-            user_id = input_user_id()
+            name = input_user_name("Enter user name: ")
+            user_id = input_user_id("Enter user ID: ")
             user = User(name, user_id)
             Library.add_user(user)
             print("User added.")
@@ -79,14 +79,14 @@ def main():
 
         # Borrow book
         elif choice == '5':
-            user_id = input_user_id()
-            isbn = input_isbn()
+            user_id = input_user_id("Enter user ID: ")
+            isbn = input_isbn("Enter ISBN: ")
             Library.checkin_book(user_id, isbn)
 
         # checkout book
         elif choice == '6':
-            user_id = input_user_id()
-            isbn = input_isbn()
+            user_id = input_user_id("Enter user ID: ")
+            isbn = input_isbn("Enter ISBN: ")
             Library.checkout_book(user_id, isbn)
 
         # Search operation on book
@@ -98,13 +98,13 @@ def main():
             choice = input("Enter choice: ")
             if choice == '1':
                 search_field = "title"
-                search_query = input_title()
+                search_query = input_title("Enter title: ")
             elif choice == '2':
                 search_field = "author"
-                search_query = input_author()
+                search_query = input_author("Enter author: ")
             elif choice == '3':
                 search_field = "isbn"
-                search_query = input_isbn()
+                search_query = input_isbn("Enter ISBN: ")
             else:
                 print("Invalid choice, please try again.")
                 continue
@@ -113,7 +113,7 @@ def main():
 
         # Update the book
         elif choice == '8':
-            isbn = input_isbn()
+            isbn = input_isbn("Enter ISBN: ")
             Library.update_book(isbn)
 
         # Delete operation on book
@@ -125,13 +125,13 @@ def main():
             choice = input("Enter choice: ")
             if choice == '1':
                 search_field = "title"
-                search_query = input_title()
+                search_query = input_title("Enter title: ")
             elif choice == '2':
                 search_field = "author"
-                search_query = input_author()
+                search_query = input_author("Enter author: ")
             elif choice == '3':
                 search_field = "isbn"
-                search_query = input_isbn()
+                search_query = input_isbn("Enter ISBN: ")
             else:
                 print("Invalid choice, please try again.")
                 continue
@@ -145,10 +145,10 @@ def main():
             choice = input("Enter choice: ")
             if choice == '1':
                 search_field = "name"
-                search_query = input_user_name()
+                search_query = input_user_name("Enter user name: ")
             elif choice == '2':
                 search_field = "userId"
-                search_query = input_user_id()
+                search_query = input_user_id("Enter user ID: ")
             else:
                 print("Invalid choice, please try again.")
                 continue
@@ -157,7 +157,7 @@ def main():
 
         # Update operation on user
         elif choice == '11':
-            user_id = input_user_id()
+            user_id = input_user_id("Enter user ID: ")
             Library.update_user(user_id)
 
         # Delete operation on user
@@ -168,10 +168,10 @@ def main():
             choice = input("Enter choice: ")
             if choice == '1':
                 search_field = "name"
-                search_query = input_user_name()
+                search_query = input_user_name("Enter user name: ")
             elif choice == '2':
                 search_field = "userId"
-                search_query = input_user_id()
+                search_query = input_user_id("Enter user ID: ")
             else:
                 print("Invalid choice, please try again.")
                 continue

@@ -22,6 +22,7 @@ from book import Book
 from user import User
 from utils import get_configuration_file_location, get_configuration_file
 from datetime import date
+from input_validation import input_title, input_author, input_quantity, input_user_name
 
 
 class Library:
@@ -154,9 +155,9 @@ class Library:
             print("\nThis book will be updated. Do you wish to continue?")
             choice = input("Enter Y/N: ")
             if choice == "Y":
-                updated_title = input("Enter new title: ")
-                updated_author = input("Enter new author: ")
-                updated_copies = input("Enter new number of copies: ")
+                updated_title = input_title("Enter new title: ")
+                updated_author = input_author("Enter new author: ")
+                updated_copies = input_quantity("Enter new Quantity: ")
                 book = Book(updated_title, updated_author, isbn, updated_copies)
                 storage.update(update_index, book, book_file_path)
                 print("Updated successfully.")
@@ -283,7 +284,7 @@ class Library:
             print("\nThis user will be updated. Do you wish to continue?")
             choice = input("Enter Y/N: ")
             if choice == "Y":
-                updated_name = input("Enter new name: ")
+                updated_name = input_user_name("Enter new name: ")
                 user = User(updated_name, user_id)
                 storage.update(update_index, user, user_file_path)
                 print("Updated successfully.")
