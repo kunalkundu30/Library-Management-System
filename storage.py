@@ -131,8 +131,8 @@ def update(indices, object, file_path):
 
             for i, key in enumerate(object.attributes):
                 if key == "copies":
-                    rows[indices[0]][i] = rows[indices[0]][i] + object.attributes[key]
-                else:
+                    rows[indices[0]][i] = int(rows[indices[0]][i]) + object.attributes[key]
+                elif len(object.attributes[key])>0:
                     rows[indices[0]][i] = object.attributes[key]
 
     except FileNotFoundError as e:

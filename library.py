@@ -35,7 +35,7 @@ class Library:
         indices = Library.search_book(
             'isbn', book.attributes['isbn'], should_return=True
         )
-        if len(indices>0):
+        if len(indices)>0:
             print("Book with same ISBN already exists")
         else:
             storage.store(book, book_file_path)
@@ -170,7 +170,7 @@ class Library:
             if choice == "Y":
                 updated_title = input_title("Enter new title: ")
                 updated_author = input_author("Enter new author: ")
-                updated_copies = input_quantity("Enter new Quantity: ")
+                updated_copies = input_quantity("Enter new quantity to be added to stock: ")
                 book = Book(updated_title, updated_author, isbn, updated_copies)
                 storage.update(update_index, book, book_file_path)
                 print("Updated successfully.")
@@ -194,7 +194,7 @@ class Library:
         indices = Library.search_user(
             'userId', user.attributes['userId'], should_return=True
         )
-        if len(indices>0):
+        if len(indices)>0:
             print("User with same user ID already exists")
         else:
             storage.store(user, user_file_path)

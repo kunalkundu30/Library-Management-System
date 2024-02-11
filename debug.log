@@ -1,2 +1,38 @@
 2024-02-11 10:54:36,091 - INFO - Book with ISBN 234 was added.
 2024-02-11 12:08:17,487 - INFO - Attempt made to add book with ISBN 12345678890.
+2024-02-11 12:10:31,769 - INFO - Attempt made to exit the application
+2024-02-11 12:11:02,070 - INFO - Attempt made to add book with ISBN 12345678909.
+2024-02-11 12:11:53,115 - INFO - Attempt made to add book with ISBN 123456778990.
+2024-02-11 12:12:33,957 - INFO - Attempt made to add book with ISBN 09878906542.
+2024-02-11 12:13:47,653 - INFO - Attempt made to add book with ISBN 2345645765433.
+2024-02-11 12:13:53,908 - INFO - Attempt made to list all book.
+2024-02-11 12:14:13,584 - INFO - Attempt made to add user with user id 1
+2024-02-11 12:14:28,835 - INFO - Attempt made to add user with user id 2
+2024-02-11 12:14:58,356 - INFO - Attempt made to add user with user id 3
+2024-02-11 12:15:17,974 - INFO - Attempt made to add user with user id 4
+2024-02-11 12:15:23,552 - INFO - Attempt made to list all users
+2024-02-11 12:15:49,482 - INFO - Attempt made to checkin book with ISBN 2345645765433 by user with user id 1
+2024-02-11 12:16:07,324 - INFO - Attempt made to checkin book with ISBN 2345645765433 by user with user id 1
+2024-02-11 12:16:40,132 - INFO - Attempt made to checkin book with ISBN 123456778990 by user with user id 2
+2024-02-11 12:17:04,904 - INFO - Attempt made to checkin book with ISBN 123456778990 by user with user id 1
+2024-02-11 12:18:02,800 - INFO - Attempt made to checkout book with ISBN 123456778990 by user with user id 1
+2024-02-11 12:18:27,412 - INFO - Attempt made to search book with title: angels
+2024-02-11 12:18:59,482 - INFO - Attempt made to search book with title: angels and demons
+2024-02-11 12:19:17,928 - INFO - Attempt made to search book with isbn: 2345645765433
+2024-02-11 12:19:28,059 - INFO - Attempt made to update book with ISBN 2345645765433
+2024-02-11 12:21:54,393 - INFO - Attempt made to update book with ISBN 2345645765433
+2024-02-11 12:23:12,159 - INFO - Attempt made to delete book with isbn: 9878906542
+2024-02-11 12:23:30,946 - INFO - Attempt made to search user with userId: 3
+2024-02-11 12:23:56,572 - INFO - Attempt made to update user with user ID 1
+2024-02-11 12:24:31,112 - INFO - Attempt made to update user with user ID 2
+2024-02-11 12:29:52,139 - INFO - Attempt made to exit the application
+2024-02-11 12:30:34,021 - INFO - Attempt made to checkout book with ISBN 463254 by user with user id 1
+2024-02-11 12:31:48,801 - INFO - Attempt made to checkin book with ISBN 123456778990 by user with user id 1
+2024-02-11 12:32:33,918 - INFO - Attempt made to update user with user ID 1
+2024-02-11 12:33:28,188 - INFO - Attempt made to update user with user ID 1
+2024-02-11 12:34:34,264 - INFO - Attempt made to exit the application
+2024-02-11 12:35:34,639 - INFO - Attempt made to add book with ISBN 2332.
+2024-02-11 12:35:50,526 - INFO - Attempt made to checkin book with ISBN 2332 by user with user id 1
+2024-02-11 12:35:56,136 - INFO - Attempt made to update user with user ID 1
+2024-02-11 12:36:41,153 - INFO - Attempt made to delete user with userId: 4
+2024-02-11 12:36:50,060 - INFO - Attempt made to exit the application
