@@ -1,19 +1,15 @@
 """
-FileName: library.py
-Author: Kunal Kundu
-Date: Feb 10,2024
+FileName: library.py Author: Kunal Kundu Date: Feb 10,2024
 
-File Description:
-- Defines the Library class for the Library Management System.
-- Manages books and users: add, delete, update, and list.
-- Handles book checkouts and returns.
-- Serves as a bridge between storage mechanisms and user interface.
+File Description: - Defines the Library class for the Library Management System.
+- Manages books and users: add, delete, update, and list. - Handles book
+checkouts and returns. - Serves as a bridge between storage mechanisms and user
+interface.
 
-Design Comments:
-- Modular approach with static methods for ease of use.
-- Centralizes configuration management for consistent settings.
-- Promotes clean separation between user interface and backend logic.
-- Facilitates future enhancements and maintenance.
+Design Comments: - Modular approach with static methods for ease of use. -
+Centralizes configuration management for consistent settings. - Promotes clean
+separation between user interface and backend logic. - Facilitates future
+enhancements and maintenance.
 """
 
 import storage
@@ -29,8 +25,8 @@ class Library:
     @staticmethod
     def add_book(book):
         """
-        @Summary: Adds a book to the library.
-        @param book (Book): The book to add.
+        @Summary: Adds a book to the library. @param book (Book): The book to
+        add.
         """
         configuration_file_location = get_configuration_file_location()
         config = get_configuration_file(configuration_file_location)
@@ -73,13 +69,14 @@ class Library:
         stock_check_checkout=False,
     ):
         """
-        @Summary: Searches for books by a specific field and query.
-        @param search_field (str): Field to search (title, author, isbn).
-        @param search_query (str): Value to search for.
-        @param should_return (bool): If true, returns search results.
-        @param stock_check_checkin (bool): If true, checks book availability for checkin (borrow).
-        @param stock_check_checkout (bool): If true, checks if the book is already checked out (return).
-        @return (list, str): Indices of found books and their availability.
+        @Summary: Searches for books by a specific field and query. @param
+        search_field (str): Field to search (title, author, isbn). @param
+        search_query (str): Value to search for. @param should_return (bool): If
+        true, returns search results. @param stock_check_checkin (bool): If
+        true, checks book availability for checkin (borrow). @param
+        stock_check_checkout (bool): If true, checks if the book is already
+        checked out (return). @return (list, str): Indices of found books and
+        their availability.
         """
         configuration_file_location = get_configuration_file_location()
         config = get_configuration_file(configuration_file_location)
@@ -105,16 +102,16 @@ class Library:
                     )
         else:
             print("\nNo books in library")
-        if should_return == True:
+        if should_return:
             return indices
-        elif stock_check_checkin == True:
+        elif stock_check_checkin:
             if int(books_dict["copies"][indices[0]]) > int(
                 books_dict["borrowed"][indices[0]]
             ):
                 return (indices, "Y")
             else:
                 return (indices, "N")
-        elif stock_check_checkout == True:
+        elif stock_check_checkout:
             if int(books_dict["borrowed"][indices[0]]) > 0:
                 return (indices, "Y")
             else:
@@ -123,9 +120,9 @@ class Library:
     @staticmethod
     def delete_book(search_field, search_query):
         """
-        @Summary: Deletes a book based on a search query.
-        @param search_field (str): Field to search for deletion.
-        @param search_query (str): Value to search for deletion.
+        @Summary: Deletes a book based on a search query. @param search_field
+        (str): Field to search for deletion. @param search_query (str): Value to
+        search for deletion.
         """
         configuration_file_location = get_configuration_file_location()
         config = get_configuration_file(configuration_file_location)
@@ -151,8 +148,8 @@ class Library:
     @staticmethod
     def update_book(isbn):
         """
-        @Summary: Updates a book's details by ISBN.
-        @param isbn (str): ISBN of the book to update.
+        @Summary: Updates a book's details by ISBN. @param isbn (str): ISBN of
+        the book to update.
         """
         configuration_file_location = get_configuration_file_location()
         config = get_configuration_file(configuration_file_location)
@@ -180,8 +177,8 @@ class Library:
     @staticmethod
     def add_user(user):
         """
-        @Summary: Adds a user to the library system.
-        @param user (User): The user to add.
+        @Summary: Adds a user to the library system. @param user (User): The
+        user to add.
         """
         configuration_file_location = get_configuration_file_location()
         config = get_configuration_file(configuration_file_location)
@@ -213,11 +210,10 @@ class Library:
     @staticmethod
     def search_user(search_field, search_query, should_return=False):
         """
-        @Summary: Searches for users by a specific field and query.
-        @param search_field (str): Field to search (name, userId).
-        @param search_query (str): Value to search for.
-        @param should_return (bool): If true, returns search results.
-        @return (list): Indices of found users.
+        @Summary: Searches for users by a specific field and query. @param
+        search_field (str): Field to search (name, userId). @param search_query
+        (str): Value to search for. @param should_return (bool): If true,
+        returns search results. @return (list): Indices of found users.
         """
         configuration_file_location = get_configuration_file_location()
         config = get_configuration_file(configuration_file_location)
@@ -241,15 +237,15 @@ class Library:
                     )
         else:
             print("\nNo user registered in library")
-        if should_return == True:
+        if should_return:
             return indices
 
     @staticmethod
     def delete_user(search_field, search_query):
         """
-        @Summary: Deletes a user based on a search query.
-        @param search_field (str): Field to search for deletion.
-        @param search_query (str): Value to search for deletion.
+        @Summary: Deletes a user based on a search query. @param search_field
+        (str): Field to search for deletion. @param search_query (str): Value to
+        search for deletion.
         """
         configuration_file_location = get_configuration_file_location()
         config = get_configuration_file(configuration_file_location)
@@ -275,8 +271,8 @@ class Library:
     @staticmethod
     def update_user(user_id):
         """
-        @Summary: Updates a user's details by user ID.
-        @param user_id (str): User ID of the user to update.
+        @Summary: Updates a user's details by user ID. @param user_id (str):
+        User ID of the user to update.
         """
         configuration_file_location = get_configuration_file_location()
         config = get_configuration_file(configuration_file_location)
@@ -302,9 +298,9 @@ class Library:
     @staticmethod
     def checkin_book(user_id, isbn):
         """
-        @Summary: Processes a book checkin (borrow) by a user.
-        @param user_id (str): ID of the user checking in the book.
-        @param isbn (str): ISBN of the book to check in.
+        @Summary: Processes a book checkin (borrow) by a user. @param user_id
+        (str): ID of the user checking in the book. @param isbn (str): ISBN of
+        the book to check in.
         """
         book_indices, availability = Library.search_book(
             "isbn", isbn, stock_check_checkin=True
@@ -329,9 +325,9 @@ class Library:
     @staticmethod
     def checkout_book(user_id, isbn):
         """
-        @Summary: Processes a book checkout (return) by a user.
-        @param user_id (str): ID of the user checking out the book.
-        @param isbn (str): ISBN of the book to check out.
+        @Summary: Processes a book checkout (return) by a user. @param user_id
+        (str): ID of the user checking out the book. @param isbn (str): ISBN of
+        the book to check out.
         """
         book_indices, issued_earlier = Library.search_book(
             "isbn", isbn, stock_check_checkout=True
