@@ -204,6 +204,7 @@ class Library:
         else:
             print("\nUser not found. Deletion task aborted.")
     
+    
     @staticmethod
     def update_user(user_id):
 
@@ -218,8 +219,7 @@ class Library:
             choice = input("Enter Y/N: ")
             if choice == "Y":
                 updated_name = input("Enter new name: ")
-                updated_user_id = input("Enter new user ID: ")
-                user = User(updated_name, updated_user_id)
+                user = User(updated_name, user_id)
                 storage.update(update_index, user, user_file_path)
                 print("Updated successfully.")
             elif choice == "N":

@@ -59,7 +59,10 @@ def update(indices, object, file_path):
         rows = list(reader)
 
         for i, key in enumerate(object.attributes):
-            rows[indices[0]][i] = object.attributes[key]
+            if key == "copies":
+                rows[indices[0]][i] = rows[indices[0]][i] + object.attributes[key]
+            else:
+                rows[indices[0]][i] = object.attributes[key]
 
     with open(file_path, 'w', newline='') as file:
         writer = csv.writer(file)
