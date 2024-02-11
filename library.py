@@ -140,7 +140,7 @@ class Library:
 
     @staticmethod
     def update_book(isbn):
-       """
+        """
         @Summary: Updates a book's details by ISBN.
         @param isbn (str): ISBN of the book to update.
         """
